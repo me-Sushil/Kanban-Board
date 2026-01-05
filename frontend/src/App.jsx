@@ -1,13 +1,31 @@
+import { useState } from "react";
+import taskServices from "./services/service";
 import "./App.css";
 
 function App() {
+  const [inputVal, setInputVal] = useState("");
+  
+
+  const addTask = () => {
+    if (inputVal.trim() === "") return;
+
+    taskServices.addTask(inputVal);
+
+    console.log("Added", inputVal);
+
+    setInputVal("");
+  };
   return (
     <>
       <div className="kanban">
         <h1>Kanban Board</h1>
         <div className="input">
-          <input placeholder="add task" />
-          <button>Add</button>
+          <input
+            placeholder="Add Task"
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+          />
+          <button onClick={addTask}>Add</button>
         </div>
       </div>
 
