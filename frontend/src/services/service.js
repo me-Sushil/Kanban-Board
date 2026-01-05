@@ -15,9 +15,9 @@ const addTask = async (task, status) => {
   return response.data;
 };
 
-const handleDelete = async (id) => {
+const deleteTask = async (id) => {
   const response = await axios.delete(`/api/tasks/${id}`);
   return response.data;
 };
 
-export default { addTask, getTask, handleDelete };
+export default { addTask, getTask, deleteTask };
