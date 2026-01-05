@@ -6,10 +6,10 @@ const getTask = async () => {
   return response.data;
 };
 
-const addTask = async (task, status) => {
+const addTask = async (task) => {
   const taskObj = {
     task: task,
-    status: status,
+    status: "todo",
   };
   const response = await axios.post(`${baseUrl}/api/tasks`, taskObj);
   return response.data;
