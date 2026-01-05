@@ -240,6 +240,26 @@ body {
   background-color: #b91c1c; /* darker red */
 }
 
+/* edit button  */
+
+.edit-input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  margin-bottom: 10px;
+}
+
+.save-btn {
+  background: #10b981;
+  color: white;
+}
+
+.cancel-btn {
+  background: #6b7280;
+  color: white;
+}
+
 
 @media (max-width: 968px) {
   .board {
