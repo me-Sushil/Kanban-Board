@@ -6,12 +6,11 @@ function App() {
   const [inputVal, setInputVal] = useState("");
   
 
-  const addTask = () => {
+  const addTask =async () => {
     if (inputVal.trim() === "") return;
 
-    taskServices.addTask(inputVal);
-
-    console.log("Added", inputVal);
+    const tasks = await taskServices.addTask(inputVal);
+    console.log("Response", tasks);
 
     setInputVal("");
   };
