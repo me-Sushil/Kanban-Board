@@ -5,6 +5,8 @@ import "./App.css";
 function App() {
   const [inputVal, setInputVal] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [editingTaskId, setEditingTaskId] = useState(null);
+  const [editedText, setEditedText] = useState("");
 
   useEffect(() => {
     const fetchTasks = async () => {
@@ -23,9 +25,9 @@ function App() {
   const addTask = async () => {
     if (inputVal.trim() === "") return;
 
-    const tasks = await taskServices.addTask(inputVal);
-    console.log("Response", tasks);
-    setTasks((prevTasks) => [...prevTasks, tasks]);
+    const newTask = await taskServices.addTask(inputVal);
+    console.log("Response", newTask);
+    setTasks((prevTasks) => [...prevTasks, newTask]);
     setInputVal("");
   };
 
@@ -36,6 +38,34 @@ function App() {
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
     } catch (error) {
       console.error("Failed to delete task:", error);
+    }
+  };
+
+  const handleEditClick = (task) => {
+    setEditingTaskId(task._id);
+    setEditedText(task.task);
+  };
+
+  const handleCancelEdit = () => {
+    setEditingTaskId(null);
+    setEditedText("");
+  };
+
+  const handleSaveEdit = async (id) => {
+    if (editedText.trim() === "") return;
+    try {
+      const updatedTask = await taskServices.updateTask(id, {
+        task: editedText,
+      });
+
+      setTasks((prev) =>
+        prev.map((task) => (task._id === id ? updatedTask : task))
+      );
+
+      setEditingTaskId(null);
+      setEditedText("");
+    } catch (error) {
+      console.error("Failed to update task:", error);
     }
   };
 
@@ -60,16 +90,44 @@ function App() {
             .filter((task) => task.status === "todo")
             .map((task) => (
               <div className="todo-task" key={task._id}>
-                <span className="task-text">{task.task}</span>
-                <div className="task-buttons">
-                  <button className="edit-btn">Edit</button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(task._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+                {editingTaskId === task._id ? (
+                  <>
+                    <input
+                      className="edit-input"
+                      value={editedText}
+                      onChange={(e) => setEditedText(e.target.value)}
+                    />
+                    <div className="task-buttons">
+                      <button
+                        className="save-btn"
+                        onClick={() => handleSaveEdit(task._id)}
+                      >
+                        Save
+                      </button>
+                      <button className="cancel-btn" onClick={handleCancelEdit}>
+                        Cancel
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span className="task-text">{task.task}</span>
+                    <div className="task-buttons">
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEditClick(task)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(task._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
         </div>
@@ -79,16 +137,44 @@ function App() {
             .filter((task) => task.status === "in-progress")
             .map((task) => (
               <div className="inProgress-task" key={task._id}>
-                <span className="task-text">{task.task}</span>
-                <div className="task-buttons">
-                  <button className="edit-btn">Edit</button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(task._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+                {editingTaskId === task._id ? (
+                  <>
+                    <input
+                      className="edit-input"
+                      value={editedText}
+                      onChange={(e) => setEditedText(e.target.value)}
+                    />
+                    <div className="task-buttons">
+                      <button
+                        className="save-btn"
+                        onClick={() => handleSaveEdit(task._id)}
+                      >
+                        Save
+                      </button>
+                      <button className="cancel-btn" onClick={handleCancelEdit}>
+                        Cancel
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span className="task-text">{task.task}</span>
+                    <div className="task-buttons">
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEditClick(task)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(task._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
         </div>
@@ -98,16 +184,44 @@ function App() {
             .filter((task) => task.status === "done")
             .map((task) => (
               <div className="done-task" key={task._id}>
-                <span className="task-text">{task.task}</span>
-                <div className="task-buttons">
-                  <button className="edit-btn">Edit</button>
-                  <button
-                    className="delete-btn"
-                    onClick={() => handleDelete(task._id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+                {editingTaskId === task._id ? (
+                  <>
+                    <input
+                      className="edit-input"
+                      value={editedText}
+                      onChange={(e) => setEditedText(e.target.value)}
+                    />
+                    <div className="task-buttons">
+                      <button
+                        className="save-btn"
+                        onClick={() => handleSaveEdit(task._id)}
+                      >
+                        Save
+                      </button>
+                      <button className="cancel-btn" onClick={handleCancelEdit}>
+                        Cancel
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span className="task-text">{task.task}</span>
+                    <div className="task-buttons">
+                      <button
+                        className="edit-btn"
+                        onClick={() => handleEditClick(task)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="delete-btn"
+                        onClick={() => handleDelete(task._id)}
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </>
+                )}
               </div>
             ))}
         </div>
