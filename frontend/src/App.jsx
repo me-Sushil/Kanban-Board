@@ -3,9 +3,9 @@ import "./App.css";
 function App() {
   return (
     <>
-      <div>
-        <h1>Add Task</h1>
-        <div>
+      <div className="kanban">
+        <h1>Kanban Board</h1>
+        <div className="input">
           <input placeholder="add task" />
           <button>Add</button>
         </div>
