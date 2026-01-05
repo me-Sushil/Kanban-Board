@@ -20,4 +20,9 @@ const deleteTask = async (id) => {
   return response.data;
 };
 
-export default { addTask, getTask, deleteTask };
+const updateTask = async (id, data) => {
+  const response = await axios.put(`/api/tasks/${id}`, data);
+  return response.data;
+};
+
+export default { addTask, getTask, deleteTask, updateTask };
