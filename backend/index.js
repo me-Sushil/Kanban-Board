@@ -54,6 +54,9 @@ app.post("/api/tasks", async (req, res, next) => {
   }
 });
 
+app.delete("/api/tasks/:id", async (req, res, next)=>{
+
+})
 app.use(middleWare.unknownEndpoint);
 app.use(middleWare.errorhandler);
 

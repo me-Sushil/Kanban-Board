@@ -16,7 +16,7 @@ const addTask = async (task, status) => {
 };
 
 const handleDelete = async (id) => {
-  const response = await axios.delete("/api/tasks", id);
+  const response = await axios.delete(`/api/tasks/${id}`);
   return response.data;
 };
 
