@@ -54,9 +54,23 @@ app.post("/api/tasks", async (req, res, next) => {
   }
 });
 
-app.delete("/api/tasks/:id", async (req, res, next)=>{
+app.delete("/api/tasks/:id", async (req, res, next) => {
+  const {id} = req.params;
+  try {
+    const deletedTask = await Task.findByIdAndDelete(id);
 
-})
+    if (!deletedTask) {
+      return res.status(404).json({ message: "Task not found" });
+    }
+
+    return res.status(200).json({
+      message: "Task deleted successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 app.use(middleWare.unknownEndpoint);
 app.use(middleWare.errorhandler);
 
