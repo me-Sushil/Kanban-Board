@@ -18,11 +18,11 @@ const taskSchema = new mongoose.Schema(
 
     order: {
       type: Number,
-      default: 0, 
+      default: 0,
     },
   },
   {
-    timestamps: true, 
+    timestamps: true,
   }
 );
 
