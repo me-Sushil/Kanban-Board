@@ -32,7 +32,7 @@ function App() {
   const handleDelete = async (id) => {
     try {
       const res = await taskServices.deleteTask(id);
-      console.log(res);
+      console.log(res.message);
       setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
     } catch (error) {
       console.error("Failed to delete task:", error);
@@ -65,7 +65,7 @@ function App() {
                   <button className="edit-btn">Edit</button>
                   <button
                     className="delete-btn"
-                    onClick={handleDelete(task._id)}
+                    onClick={() => handleDelete(task._id)}
                   >
                     Delete
                   </button>
@@ -82,7 +82,12 @@ function App() {
                 <span className="task-text">{task.task}</span>
                 <div className="task-buttons">
                   <button className="edit-btn">Edit</button>
-                  <button className="delete-btn">Delete</button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(task._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
@@ -96,7 +101,12 @@ function App() {
                 <span className="task-text">{task.task}</span>
                 <div className="task-buttons">
                   <button className="edit-btn">Edit</button>
-                  <button className="delete-btn">Delete</button>
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(task._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
