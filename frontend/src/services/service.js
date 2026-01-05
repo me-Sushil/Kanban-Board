@@ -16,12 +16,12 @@ const addTask = async (task, status) => {
 };
 
 const deleteTask = async (id) => {
-  const response = await axios.delete(`/api/tasks/${id}`);
+  const response = await axios.delete(`${baseUrl}/api/tasks/${id}`);
   return response.data;
 };
 
 const updateTask = async (id, data) => {
-  const response = await axios.put(`/api/tasks/${id}`, data);
+  const response = await axios.put(`${baseUrl}/api/tasks/${id}`, data);
   return response.data;
 };
 
