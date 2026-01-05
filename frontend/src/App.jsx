@@ -28,6 +28,17 @@ function App() {
     setTasks((prevTasks) => [...prevTasks, tasks]);
     setInputVal("");
   };
+
+  const handleDelete = async (id) => {
+    try {
+      const res = await taskServices.deleteTask(id);
+      console.log(res);
+      setTasks((prevTasks) => prevTasks.filter((task) => task._id !== id));
+    } catch (error) {
+      console.error("Failed to delete task:", error);
+    }
+  };
+
   return (
     <>
       <div className="kanban">
@@ -52,7 +63,12 @@ function App() {
                 <span className="task-text">{task.task}</span>
                 <div className="task-buttons">
                   <button className="edit-btn">Edit</button>
-                  <button className="delete-btn">Delete</button>
+                  <button
+                    className="delete-btn"
+                    onClick={handleDelete(task._id)}
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
