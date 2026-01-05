@@ -55,7 +55,7 @@ app.post("/api/tasks", async (req, res, next) => {
 });
 
 app.delete("/api/tasks/:id", async (req, res, next) => {
-  const {id} = req.params;
+  const { id } = req.params;
   try {
     const deletedTask = await Task.findByIdAndDelete(id);
 
@@ -66,6 +66,18 @@ app.delete("/api/tasks/:id", async (req, res, next) => {
     return res.status(200).json({
       message: "Task deleted successfully",
     });
+  } catch (error) {
+    next(error);
+  }
+});
+
+app.put("/api/tasks/:id", async (req, res, next) => {
+  try {
+    const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+
+    res.json(updatedTask);
   } catch (error) {
     next(error);
   }
