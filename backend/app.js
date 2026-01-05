@@ -28,7 +28,7 @@ app.use(middleWare.requestLogger);
 
 app.use("/api/tasks", taskRouter);
 
-app.get("*", (req, res) => {
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
