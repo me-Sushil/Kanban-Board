@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const path = require("path");
 require("dotenv").config();
 
 const app = express();
@@ -12,7 +13,7 @@ const taskRouter = require("./routes/tasks");
 
 app.use(express.json());
 app.use(cors());
-app.use(express.static("dist"));
+app.use(express.static(path.join(__dirname, "dist")));
 
 mongoose
   .connect(config.MONGODB_URL)
@@ -27,6 +28,9 @@ app.use(middleWare.requestLogger);
 
 app.use("/api/tasks", taskRouter);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 app.use(middleWare.unknownEndpoint);
 app.use(middleWare.errorhandler);
