@@ -176,14 +176,70 @@ body {
   cursor: grabbing;
 }
 
-.todo-task span,
+/* .todo-task span,
 .inProgress-task span,
 .done-task span {
   font-size: 1rem;
   color: #2d3748;
   font-weight: 500;
   display: block;
+} */
+.task-card {
+  background: #ffffff;
+  padding: 14px 16px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  cursor: grab;
+  transition: all 0.3s ease;
 }
+
+.task-card:hover {
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.task-text {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #2d3748;
+}
+
+/* buttons */
+.task-buttons {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.task-buttons button {
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-btn {
+  background-color: #f59e0b; /* orange */
+  color: white;
+}
+
+.edit-btn:hover {
+  background-color: #d97706; /* darker orange */
+}
+
+.delete-btn {
+  background-color: #ef4444; /* red */
+  color: white;
+}
+
+.delete-btn:hover {
+  background-color: #b91c1c; /* darker red */
+}
+
 
 @media (max-width: 968px) {
   .board {
