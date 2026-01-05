@@ -13,31 +13,31 @@ const middleWare = require("./utils/middleware");
 
 mongoose
   .connect(config.MONGODB_URL)
-  .then((result) => {
+  .then(() => {
     console.log("Database Connected");
   })
   .catch((error) => {
-    console.log(error, "Error on Database Connection");
+    console.error("Database connection error:", error.message);
   });
 
-  app.use(middleWare.requestLogger);
+app.use(middleWare.requestLogger);
 
-app.get("/api/task", async (req, res, next) => {
+app.get("/api/tasks", async (req, res, next) => {
   try {
-    const task = await Task.find({});
-    return res.status(200).json({ task });
+    const tasks = await Task.find({});
+    res.status(200).json(tasks);
   } catch (error) {
     next(error);
   }
 });
 
-app.post("/api/task", async (req, res, next) => {
+app.post("/api/tasks", async (req, res, next) => {
   try {
     const { task, status } = req.body;
 
-    if (!task === undefined) {
+    if (!task) {
       return res.status(400).json({
-        message: "Missing required fields: Task",
+        message: "Task is required",
       });
     }
 
@@ -46,20 +46,16 @@ app.post("/api/task", async (req, res, next) => {
       status: status || "todo",
     });
 
-    const result = await newTask.save();
+    const savedTask = await newTask.save();
 
-    res
-      .status(201)
-      .json({ message: "Task created successfully", Task: result });
+    res.status(201).json(savedTask);
   } catch (error) {
     next(error);
   }
 });
 
-
-app.use(middleWare.errorhandler);
 app.use(middleWare.unknownEndpoint);
-
+app.use(middleWare.errorhandler);
 
 app.listen(config.PORT, () => {
   console.log(`Server is running on Port ${config.PORT}`);
