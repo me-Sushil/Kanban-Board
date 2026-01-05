@@ -1,35 +1,9 @@
-const express = require("express");
-const cors = require("cors");
-const mongoose = require("mongoose");
 require("dotenv").config();
-
-const app = express();
-
-
+const app = require("./app");
 const config = require("./utils/config");
-const middleWare = require("./utils/middleware");
-const taskRouter = require("./routes/tasks");
-
-app.use(express.json());
-app.use(cors());
-
-mongoose
-  .connect(config.MONGODB_URL)
-  .then(() => {
-    console.log("Database Connected");
-  })
-  .catch((error) => {
-    console.error("Database connection error:", error.message);
-  });
-
-app.use(middleWare.requestLogger);
-
-app.use("/api/tasks", taskRouter);
 
 
-app.use(middleWare.unknownEndpoint);
-app.use(middleWare.errorhandler);
 
 app.listen(config.PORT, () => {
-  console.log(`Server is running on Port ${config.PORT}`);
+  console.log(`The server is running on PORT ${config.PORT}`);
 });
